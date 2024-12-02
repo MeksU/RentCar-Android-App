@@ -1,6 +1,6 @@
 ﻿# RentCar - Android App
 
-Creating app for Android in Kotlin
+Creating app for Android in Kotlin using RentCar Backend from my repo
 <br><br>
 In progress...
 <br><br>
