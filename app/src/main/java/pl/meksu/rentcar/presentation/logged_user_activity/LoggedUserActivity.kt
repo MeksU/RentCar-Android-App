@@ -8,6 +8,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.mutableStateOf
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.common.Priority
@@ -36,6 +37,8 @@ class LoggedUserActivity : AppCompatActivity() {
 
     private val loggedUserViewModel: LoggedUserViewModel by viewModels()
 
+    private val isLoading = mutableStateOf(false)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -48,7 +51,8 @@ class LoggedUserActivity : AppCompatActivity() {
                     onPayClick = { id, price ->
                         startOrder(id, price)
                     },
-                    viewModel = loggedUserViewModel
+                    viewModel = loggedUserViewModel,
+                    isLoading = isLoading.value
                 )
             }
         }
@@ -59,11 +63,15 @@ class LoggedUserActivity : AppCompatActivity() {
         val config = CoreConfig(Constants.CLIENT_ID, environment = Environment.SANDBOX)
         val payPalWebCheckoutClient = PayPalWebCheckoutClient(this@LoggedUserActivity, config, Constants.RETURN_URL)
         payPalWebCheckoutClient.listener = object : PayPalWebCheckoutListener {
-            override fun onPayPalWebSuccess(result: PayPalWebCheckoutResult) {}
-
-            override fun onPayPalWebFailure(error: PayPalSDKError) {}
-
-            override fun onPayPalWebCanceled() {}
+            override fun onPayPalWebSuccess(result: PayPalWebCheckoutResult) {
+                isLoading.value = false
+            }
+            override fun onPayPalWebFailure(error: PayPalSDKError) {
+                isLoading.value = false
+            }
+            override fun onPayPalWebCanceled() {
+                isLoading.value = false
+            }
         }
 
         orderId = orderID
@@ -74,6 +82,7 @@ class LoggedUserActivity : AppCompatActivity() {
     }
 
     private fun startOrder(id: Int, price: String) {
+        isLoading.value = true
         loggedUserViewModel.setReservationId(id)
         uniqueId = UUID.randomUUID().toString()
 
@@ -117,6 +126,7 @@ class LoggedUserActivity : AppCompatActivity() {
                 }
 
                 override fun onError(error: ANError) {
+                    isLoading.value = false
                 }
             })
     }
@@ -166,10 +176,12 @@ class LoggedUserActivity : AppCompatActivity() {
                 override fun onResponse(response: JSONObject) {
                     val orderId = response.optString("id", "Unknown ID")
                     loggedUserViewModel.addPayment(orderId)
+                    isLoading.value = false
                     Toast.makeText(this@LoggedUserActivity, "Płatność zakończona sukcesem!", Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onError(error: ANError) {
+                    isLoading.value = false
                     Toast.makeText(this@LoggedUserActivity, "Płatność nie powiodła się!", Toast.LENGTH_SHORT).show()
                 }
             })

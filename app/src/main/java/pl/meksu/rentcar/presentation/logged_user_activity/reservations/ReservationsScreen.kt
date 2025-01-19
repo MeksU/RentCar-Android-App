@@ -92,6 +92,7 @@ fun ReservationsScreen(
                     reservation,
                     onPayClick = { id, price ->
                         onPayClick(id, price)
+
                     },
                     onDeleteClick = {
                         deleteOfferIdState = it

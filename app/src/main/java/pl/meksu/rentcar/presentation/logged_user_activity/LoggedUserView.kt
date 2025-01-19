@@ -3,8 +3,10 @@ package pl.meksu.rentcar.presentation.logged_user_activity
 import android.content.Intent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -18,6 +20,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -68,7 +71,8 @@ import pl.meksu.rentcar.presentation.ui.theme.fontFamily
 @Composable
 fun LoggedUserView(
     onPayClick: (Int, String) -> Unit,
-    viewModel: LoggedUserViewModel
+    viewModel: LoggedUserViewModel,
+    isLoading: Boolean
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope: CoroutineScope = rememberCoroutineScope()
@@ -271,8 +275,19 @@ fun LoggedUserView(
                 }
             }
         ) {
-            Navigation(navController = navController, pd = it) { id, price ->
-                onPayClick(id, price)
+            Box(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                Navigation(navController = navController, pd = it) { id, price ->
+                    onPayClick(id, price)
+                }
+                if (isLoading) {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .size(50.dp)
+                    )
+                }
             }
         }
     }
