@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import pl.meksu.rentcar.common.Resource
-import pl.meksu.rentcar.data.remote.model.RegisterRequest
+import pl.meksu.rentcar.domain.model.RegisterRequest
 import pl.meksu.rentcar.domain.use_case.RegisterUseCase
 import javax.inject.Inject
 

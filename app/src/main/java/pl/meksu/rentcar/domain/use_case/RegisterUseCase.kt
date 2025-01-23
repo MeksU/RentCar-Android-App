@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okio.IOException
 import pl.meksu.rentcar.common.Resource
-import pl.meksu.rentcar.data.remote.model.RegisterRequest
+import pl.meksu.rentcar.domain.model.RegisterRequest
 import pl.meksu.rentcar.domain.repository.UserRepository
 import pl.meksu.rentcar.common.ErrorParser
 import retrofit2.HttpException

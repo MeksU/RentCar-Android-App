@@ -1,4 +1,4 @@
-package pl.meksu.rentcar.data.remote.model
+package pl.meksu.rentcar.domain.model
 
 data class RegisterRequest(
     val address: String,

@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okio.IOException
 import pl.meksu.rentcar.common.Resource
-import pl.meksu.rentcar.data.remote.model.Payment
+import pl.meksu.rentcar.domain.model.Payment
 import pl.meksu.rentcar.domain.repository.ReservationRepository
 import javax.inject.Inject
 

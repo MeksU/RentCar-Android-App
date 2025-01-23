@@ -85,7 +85,7 @@ fun RegisterScreen(
                     IconButton(
                         onClick = {
                             viewModel.clearState()
-                            navController.popBackStack()
+                            navController.navigateUp()
                         }
                     ) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Go back", tint = MainBlue)
@@ -236,7 +236,7 @@ fun RegisterScreen(
                     Toast.LENGTH_SHORT
                 ).show()
                 viewModel.clearState()
-                navController.popBackStack()
+                navController.navigateUp()
             }
         }
     }

@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okio.IOException
 import pl.meksu.rentcar.common.Resource
-import pl.meksu.rentcar.data.remote.model.LoginResponse
+import pl.meksu.rentcar.domain.model.LoginResponse
 import pl.meksu.rentcar.domain.repository.UserRepository
 import pl.meksu.rentcar.common.ErrorParser
 import javax.inject.Inject

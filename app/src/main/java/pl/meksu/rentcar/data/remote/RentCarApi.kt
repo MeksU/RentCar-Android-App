@@ -5,10 +5,10 @@ import pl.meksu.rentcar.data.remote.dto.CarDTO
 import pl.meksu.rentcar.data.remote.dto.OfferDTO
 import pl.meksu.rentcar.data.remote.dto.ReservationDTO
 import pl.meksu.rentcar.data.remote.dto.UserReservationDTO
-import pl.meksu.rentcar.data.remote.model.LoginRequest
-import pl.meksu.rentcar.data.remote.model.LoginResponse
-import pl.meksu.rentcar.data.remote.model.Payment
-import pl.meksu.rentcar.data.remote.model.RegisterRequest
+import pl.meksu.rentcar.domain.model.LoginRequest
+import pl.meksu.rentcar.domain.model.LoginResponse
+import pl.meksu.rentcar.domain.model.Payment
+import pl.meksu.rentcar.domain.model.RegisterRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE

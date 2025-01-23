@@ -1,8 +1,8 @@
 package pl.meksu.rentcar.domain.repository
 
 import pl.meksu.rentcar.common.BackendResponse
-import pl.meksu.rentcar.data.remote.model.LoginResponse
-import pl.meksu.rentcar.data.remote.model.RegisterRequest
+import pl.meksu.rentcar.domain.model.LoginResponse
+import pl.meksu.rentcar.domain.model.RegisterRequest
 import retrofit2.Response
 
 interface UserRepository {

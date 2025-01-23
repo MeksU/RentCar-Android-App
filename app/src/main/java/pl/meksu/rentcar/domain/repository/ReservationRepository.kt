@@ -2,7 +2,7 @@ package pl.meksu.rentcar.domain.repository
 
 import pl.meksu.rentcar.data.remote.dto.ReservationDTO
 import pl.meksu.rentcar.data.remote.dto.UserReservationDTO
-import pl.meksu.rentcar.data.remote.model.Payment
+import pl.meksu.rentcar.domain.model.Payment
 import retrofit2.Response
 
 interface ReservationRepository {

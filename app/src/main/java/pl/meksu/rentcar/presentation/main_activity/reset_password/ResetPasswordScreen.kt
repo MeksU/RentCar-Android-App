@@ -80,7 +80,7 @@ fun ResetPasswordScreen(
                     IconButton(
                         onClick = {
                             viewModel.goBack()
-                            navController.popBackStack()
+                            navController.navigateUp()
                         }
                     ) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Go back", tint = MainBlue)
@@ -229,7 +229,7 @@ fun ResetPasswordScreen(
                         }
                         else -> {
                             viewModel.goBack()
-                            navController.popBackStack()
+                            navController.navigateUp()
                         }
                     }
                     Spacer(Modifier.height(16.dp))

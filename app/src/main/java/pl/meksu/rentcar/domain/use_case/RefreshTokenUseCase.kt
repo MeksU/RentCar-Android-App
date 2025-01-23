@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import pl.meksu.rentcar.common.ErrorParser
 import pl.meksu.rentcar.common.Resource
-import pl.meksu.rentcar.data.remote.model.LoginResponse
+import pl.meksu.rentcar.domain.model.LoginResponse
 import pl.meksu.rentcar.domain.repository.UserRepository
 import retrofit2.HttpException
 import java.io.IOException

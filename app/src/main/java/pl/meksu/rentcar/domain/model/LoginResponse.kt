@@ -1,4 +1,4 @@
-package pl.meksu.rentcar.data.remote.model
+package pl.meksu.rentcar.domain.model
 
 data class LoginResponse(
     val jwt: String,
