@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import pl.meksu.rentcar.common.Resource
-import pl.meksu.rentcar.data.datastore.EncryptedDataStore
+import pl.meksu.rentcar.domain.datastore.EncryptedDataStore
 import pl.meksu.rentcar.domain.use_case.DeleteReservationUseCase
 import pl.meksu.rentcar.domain.use_case.GetUserReservationsUseCase
 import javax.inject.Inject

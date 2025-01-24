@@ -7,12 +7,13 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import pl.meksu.rentcar.common.Constants
-import pl.meksu.rentcar.data.datastore.EncryptedDataStore
+import pl.meksu.rentcar.data.datastore.EncryptedDataStoreImpl
 import pl.meksu.rentcar.data.remote.RentCarApi
 import pl.meksu.rentcar.data.repository.CarRepositoryImpl
 import pl.meksu.rentcar.data.repository.OfferRepositoryImpl
 import pl.meksu.rentcar.data.repository.ReservationRepositoryImpl
 import pl.meksu.rentcar.data.repository.UserRepositoryImpl
+import pl.meksu.rentcar.domain.datastore.EncryptedDataStore
 import pl.meksu.rentcar.domain.repository.CarRepository
 import pl.meksu.rentcar.domain.repository.OfferRepository
 import pl.meksu.rentcar.domain.repository.ReservationRepository
@@ -37,7 +38,7 @@ object AppModule {
     @Provides
     @Singleton
     fun provideEncryptedDataStore(@ApplicationContext context: Context): EncryptedDataStore {
-        return EncryptedDataStore(context)
+        return EncryptedDataStoreImpl(context)
     }
 
     @Provides

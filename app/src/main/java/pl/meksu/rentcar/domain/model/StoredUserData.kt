@@ -1,4 +1,4 @@
-package pl.meksu.rentcar.data.datastore
+package pl.meksu.rentcar.domain.model
 
 data class StoredUserData(
     val jwtToken: String? = null,
