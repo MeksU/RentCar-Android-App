@@ -1,7 +1,9 @@
 package pl.meksu.rentcar.domain.use_case
 
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import okio.IOException
 import pl.meksu.rentcar.common.Resource
 import pl.meksu.rentcar.domain.repository.ReservationRepository
@@ -22,5 +24,5 @@ class DeleteReservationUseCase @Inject constructor(
         } catch (e: IOException) {
             emit(Resource.Error(message = "Nie można połączyć się z serwerem. Sprawdź połączenie z internetem."))
         }
-    }
+    }.flowOn(Dispatchers.IO)
 }

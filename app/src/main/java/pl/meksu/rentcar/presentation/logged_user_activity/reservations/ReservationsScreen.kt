@@ -43,15 +43,20 @@ fun ReservationsScreen(
     val context = LocalContext.current
     var deleteOfferIdState by rememberSaveable { mutableIntStateOf(-2) }
 
-    val reservationFilters = listOf("Aktywne", "Zakończone", "Niezapłacone", "Wszystkie")
-    var reservationFilter by remember { mutableStateOf("Aktywne") }
+    val reservationFilters = listOf(
+        ReservationStatus.Active,
+        ReservationStatus.Finished,
+        ReservationStatus.Unpaid,
+        ReservationStatus.All
+    )
+    var activeFilter: ReservationStatus by remember { mutableStateOf(ReservationStatus.Active) }
 
     val filteredReservations = state.reservations.filter { reservation ->
-        when(reservationFilter) {
-            "Aktywne" -> reservation.endDate >= LocalDate.now()
-            "Zakończone" -> reservation.endDate < LocalDate.now()
-            "Niezapłacone" -> reservation.paymentStatus == "Niezapłacona"
-            else -> reservation.id >= 0
+        when(activeFilter) {
+            ReservationStatus.Active -> reservation.endDate >= LocalDate.now()
+            ReservationStatus.Finished -> reservation.endDate < LocalDate.now()
+            ReservationStatus.Unpaid -> reservation.paymentStatus == "Niezapłacona"
+            ReservationStatus.All -> reservation.id >= 0
         }
     }.sortedBy { it.startDate }
 
@@ -74,13 +79,13 @@ fun ReservationsScreen(
                 .padding(8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            items(reservationFilters) { type ->
+            items(reservationFilters) {
                 TypeButton(
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = if (reservationFilter == type) MaterialTheme.colorScheme.primary else Color.Black
+                        containerColor = if (activeFilter == it) MaterialTheme.colorScheme.primary else Color.Black
                     ),
-                    onClick = { reservationFilter = type },
-                    text = type
+                    onClick = { activeFilter = it },
+                    text = it.filter
                 )
             }
         }
@@ -144,4 +149,13 @@ fun ReservationsScreen(
         ).show()
         viewModel.clearDeleteState()
     }
+}
+
+sealed class ReservationStatus(
+    val filter: String
+) {
+    data object Active: ReservationStatus("Aktywne")
+    data object Finished: ReservationStatus("Zakończone")
+    data object Unpaid: ReservationStatus("Niezapłacone")
+    data object All: ReservationStatus("Wszystkie")
 }

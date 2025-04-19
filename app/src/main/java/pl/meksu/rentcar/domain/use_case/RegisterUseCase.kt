@@ -1,7 +1,9 @@
 package pl.meksu.rentcar.domain.use_case
 
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import okio.IOException
 import pl.meksu.rentcar.common.Resource
 import pl.meksu.rentcar.domain.model.RegisterRequest
@@ -32,5 +34,5 @@ class RegisterUseCase @Inject constructor(
         } catch (e: IOException) {
             emit(Resource.Error(message = "Brak połączenia z internetem. Spróbuj ponownie."))
         }
-    }
+    }.flowOn(Dispatchers.IO)
 }

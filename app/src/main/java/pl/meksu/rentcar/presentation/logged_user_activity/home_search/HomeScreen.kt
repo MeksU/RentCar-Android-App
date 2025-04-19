@@ -16,7 +16,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import pl.meksu.rentcar.domain.model.Offer
 import pl.meksu.rentcar.presentation.logged_user_activity.home_search.components.OfferItem
 

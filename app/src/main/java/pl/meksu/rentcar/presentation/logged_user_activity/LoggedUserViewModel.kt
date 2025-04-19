@@ -6,7 +6,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import pl.meksu.rentcar.common.Resource
 import pl.meksu.rentcar.domain.datastore.EncryptedDataStore
 import pl.meksu.rentcar.domain.model.Payment
@@ -25,9 +27,12 @@ class LoggedUserViewModel @Inject constructor(
 
     fun addPayment(paymentNumber: String) {
         viewModelScope.launch {
-            val userData = encryptedDataStore.loadUserData()
+            val userData = withContext(Dispatchers.IO) {
+                encryptedDataStore.loadUserData()
+            }
             val token = "Bearer ${userData.jwtToken}"
             val payment = Payment(_reservationId.intValue, paymentNumber)
+
             addPaymentUseCase(token, payment).collect { result ->
                 when (result) {
                     is Resource.Success -> {
@@ -48,7 +53,9 @@ class LoggedUserViewModel @Inject constructor(
 
     fun logOut() {
         viewModelScope.launch {
-            encryptedDataStore.clearUserData()
+            withContext(Dispatchers.IO) {
+                encryptedDataStore.clearUserData()
+            }
         }
     }
 

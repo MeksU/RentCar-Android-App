@@ -38,17 +38,27 @@ fun SearchScreen(
 ) {
     val state = viewModel.state.value
     var searchText by remember { mutableStateOf(TextFieldValue("")) }
-    var selectedType by remember { mutableStateOf("") }
+    var selectedType: CarType by remember { mutableStateOf(CarType.All) }
 
-    val carTypes = listOf("Coupe", "Kombi", "Sedan", "SUV", "Hatchback", "Minivan", "VAN")
+    val carTypes = listOf(
+        CarType.All,
+        CarType.Coupe,
+        CarType.Kombi,
+        CarType.Sedan,
+        CarType.Suv,
+        CarType.Hatchback,
+        CarType.Minivan,
+        CarType.Van
+    )
 
     val filteredOffers = state.offers.filter { offer ->
         val car = "${offer.car.brand} ${offer.car.model}"
         val searchQuery = searchText.text.trim().lowercase()
 
         (searchQuery.isEmpty() || car.lowercase().contains(searchQuery)) &&
-                (offer.car.type.contains(selectedType))
+                (offer.car.type.contains(selectedType.query))
     }
+
     Column(modifier = Modifier.fillMaxSize()) {
         TextField(
             value = searchText,
@@ -80,22 +90,13 @@ fun SearchScreen(
                 .padding(8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            item {
+            items(carTypes) {
                 TypeButton(
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = if (selectedType == "") MaterialTheme.colorScheme.primary else Color.Black
+                        containerColor = if (selectedType == it) MaterialTheme.colorScheme.primary else Color.Black
                     ),
-                    onClick = { selectedType = "" },
-                    text = "Wszystkie"
-                )
-            }
-            items(carTypes) { type ->
-                TypeButton(
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = if (selectedType == type) MaterialTheme.colorScheme.primary else Color.Black
-                    ),
-                    onClick = { selectedType = type },
-                    text = type
+                    onClick = { selectedType = it },
+                    text = it.type
                 )
             }
         }
@@ -117,4 +118,18 @@ fun SearchScreen(
             CircularProgressIndicator()
         }
     }
+}
+
+sealed class CarType(
+    val query: String,
+    val type: String
+) {
+    data object All: CarType("", "Wszystkie")
+    data object Coupe: CarType("Coupe", "Coupe")
+    data object Kombi: CarType("Kombi", "Kombi")
+    data object Sedan: CarType("Sedan", "Sedan")
+    data object Suv: CarType("SUV", "SUV")
+    data object Hatchback: CarType("Hatchback", "Hatchback")
+    data object Minivan: CarType("Minivan", "Minivan")
+    data object Van: CarType("VAN", "VAN")
 }

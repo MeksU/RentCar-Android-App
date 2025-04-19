@@ -5,7 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import pl.meksu.rentcar.common.Resource
 import pl.meksu.rentcar.domain.datastore.EncryptedDataStore
 import pl.meksu.rentcar.domain.use_case.DeleteReservationUseCase
@@ -30,7 +32,9 @@ class ReservationsViewModel @Inject constructor(
 
     private fun fetchReservations() {
         viewModelScope.launch {
-            val userData = encryptedDataStore.loadUserData()
+            val userData = withContext(Dispatchers.IO) {
+                encryptedDataStore.loadUserData()
+            }
             val token = "Bearer ${userData.jwtToken}"
             val userId = userData.userId ?: -1
             getUserReservationsUseCase(token, userId).collect { result ->
@@ -51,7 +55,9 @@ class ReservationsViewModel @Inject constructor(
 
     fun deleteReservation(offerId: Int) {
         viewModelScope.launch {
-            val userData = encryptedDataStore.loadUserData()
+            val userData = withContext(Dispatchers.IO) {
+                encryptedDataStore.loadUserData()
+            }
             val token = "Bearer ${userData.jwtToken}"
 
             deleteReservationUseCase(token, offerId).collect { result ->

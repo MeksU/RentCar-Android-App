@@ -5,7 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import pl.meksu.rentcar.common.Resource
 import pl.meksu.rentcar.domain.datastore.EncryptedDataStore
 import pl.meksu.rentcar.domain.model.StoredUserData
@@ -44,7 +46,9 @@ class LoginViewModel @Inject constructor(
 
                         result.data?.let { loginResponse ->
                             val newData = StoredUserData(loginResponse.jwt, loginResponse.userId, loginResponse.userName)
-                            encryptedDataStore.saveUserData(newData)
+                            withContext(Dispatchers.IO) {
+                                encryptedDataStore.saveUserData(newData)
+                            }
                         }
                     }
                     is Resource.Error -> {

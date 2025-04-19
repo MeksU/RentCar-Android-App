@@ -1,7 +1,9 @@
 package pl.meksu.rentcar.domain.use_case
 
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import pl.meksu.rentcar.common.Resource
 import pl.meksu.rentcar.domain.repository.UserRepository
 import java.io.IOException
@@ -22,7 +24,7 @@ class ResetPasswordUseCase @Inject constructor(
         } catch (e: IOException) {
             emit(Resource.Error(message = "Brak połączenia z internetem."))
         }
-    }
+    }.flowOn(Dispatchers.IO)
 
     fun verifyResetCode(email: String, resetCode: String): Flow<Resource<String>> = flow {
         try {
@@ -36,7 +38,7 @@ class ResetPasswordUseCase @Inject constructor(
         } catch (e: IOException) {
             emit(Resource.Error(message = "Brak połączenia z internetem."))
         }
-    }
+    }.flowOn(Dispatchers.IO)
 
     fun resetPassword(email: String, newPassword: String): Flow<Resource<String>> = flow {
         try {
@@ -50,5 +52,5 @@ class ResetPasswordUseCase @Inject constructor(
         } catch (e: IOException) {
             emit(Resource.Error(message = "Brak połączenia z internetem."))
         }
-    }
+    }.flowOn(Dispatchers.IO)
 }
