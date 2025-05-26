@@ -13,6 +13,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import pl.meksu.rentcar.domain.model.Car
 import pl.meksu.rentcar.domain.model.Offer
+import pl.meksu.rentcar.presentation.logged_user_activity.contact.ContactScreen
 import pl.meksu.rentcar.presentation.logged_user_activity.home_search.HomeScreen
 import pl.meksu.rentcar.presentation.logged_user_activity.home_search.SearchScreen
 import pl.meksu.rentcar.presentation.logged_user_activity.offer_detail.OfferDetailScreen
@@ -30,7 +31,7 @@ fun Navigation(
         modifier = Modifier.padding(pd)
     ) {
         composable(Screen.DrawerScreen.Contact.route) {
-
+            ContactScreen()
         }
         composable(Screen.DrawerScreen.Account.route) {
 

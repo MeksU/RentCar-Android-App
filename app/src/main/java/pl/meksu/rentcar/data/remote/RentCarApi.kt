@@ -9,6 +9,7 @@ import pl.meksu.rentcar.domain.model.LoginRequest
 import pl.meksu.rentcar.domain.model.LoginResponse
 import pl.meksu.rentcar.domain.model.Payment
 import pl.meksu.rentcar.domain.model.RegisterRequest
+import pl.meksu.rentcar.domain.model.UserMessage
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -78,5 +79,12 @@ interface RentCarApi {
     suspend fun addPayment(
         @Header("Authorization") token: String,
         @Body payment: Payment
+    ): Response<Unit>
+
+    @Headers("Content-Type: application/json;charset=UTF-8")
+    @POST("/api/messages")
+    suspend fun sendMessage(
+        @Header("Authorization") token: String,
+        @Body message: UserMessage
     ): Response<Unit>
 }

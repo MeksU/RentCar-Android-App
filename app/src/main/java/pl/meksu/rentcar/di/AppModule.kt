@@ -10,11 +10,13 @@ import pl.meksu.rentcar.common.Constants
 import pl.meksu.rentcar.data.datastore.EncryptedDataStoreImpl
 import pl.meksu.rentcar.data.remote.RentCarApi
 import pl.meksu.rentcar.data.repository.CarRepositoryImpl
+import pl.meksu.rentcar.data.repository.MessageRepositoryImpl
 import pl.meksu.rentcar.data.repository.OfferRepositoryImpl
 import pl.meksu.rentcar.data.repository.ReservationRepositoryImpl
 import pl.meksu.rentcar.data.repository.UserRepositoryImpl
 import pl.meksu.rentcar.domain.datastore.EncryptedDataStore
 import pl.meksu.rentcar.domain.repository.CarRepository
+import pl.meksu.rentcar.domain.repository.MessageRepository
 import pl.meksu.rentcar.domain.repository.OfferRepository
 import pl.meksu.rentcar.domain.repository.ReservationRepository
 import pl.meksu.rentcar.domain.repository.UserRepository
@@ -63,5 +65,11 @@ object AppModule {
     @Singleton
     fun provideReservationRepository(api: RentCarApi): ReservationRepository {
         return ReservationRepositoryImpl(api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMessageRepository(api: RentCarApi): MessageRepository {
+        return MessageRepositoryImpl(api)
     }
 }
